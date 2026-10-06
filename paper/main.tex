@@ -50,7 +50,7 @@
 
 % =====================================================================
 \begin{abstract}
-We study whether a generative model can learn how cells are arranged in tissue, and what determines that arrangement. BlackPearl Morphix represents a tissue neighbourhood as an unordered set of cells (2D position and cell class) and learns its distribution with conditional flow matching, using a permutation-equivariant transformer with distance-dependent attention. In \emph{Stage~1}, trained on a public mouse-embryo seqFISH dataset and evaluated on spatially held-out tissue, the unconditional model closes $87 \pm 8\%$ of the gap between random scatter and real tissue on cell-type neighbourhood structure (three splits) and outperforms a composition-matched shuffled baseline in every split. In \emph{Stage~2} we use a public Perturb-FISH CRISPR screen in tumour xenografts (187{,}215 cells; 35 knocked-out genes), which we reconstruct into a cell-level table linking position, cell class and knockout. A location-controlled permutation test finds real knockout effects on neighbourhood composition (14 significant tests across 7 knockouts), but neither a knockout-conditioned model nor a simple lookup baseline predicts knockout-specific neighbourhoods in held-out tissue better than assuming no effect: in this pooled design, effects are small, spatially heterogeneous and confounded with location. In contrast, conditioning on each tumour cell's own expression profile, after removing genes that could leak from neighbouring cells, predicts its neighbourhood in held-out tissue (Spearman $\rho = 0.57$ for host-cell fraction and $0.41$ for T-cell fraction; shuffled-expression control $\rho \approx 0$), matching a strong linear baseline and recovering known biology (interferon-response genes near T cells; hypoxia genes away from them). Finally (\emph{Stage~3}), a semi-synthetic virtual laboratory built on the real tumour tissue, with knockout effects planted at the measured sizes, shows why and how such experiments should be designed. Real neighbourhoods are strongly spatially correlated: the mean of 50 cells from one tissue patch varies about five times more than the mean of 50 randomly placed cells, so a mosaic (clonal) layout yields 15 false hits among 22 null knockouts per screen, whereas a randomised layout yields none. With randomised layouts, an active-learning strategy that chooses which knockout to test next finds 80\% of real effects with $2.3\times$ fewer cells than a standard screen (3{,}250 vs.\ 7{,}500) and 90\% of effects in every simulated world within 4{,}500 cells, a level the standard screen reached in only 40 of 100 worlds within 15{,}000 cells. Together, these results argue that learning causal genotype-to-tissue maps requires purpose-designed, randomised, adaptively chosen experiments, which motivates a closed-loop, robot-executed laboratory.
+We study whether a generative model can learn how cells are arranged in tissue, and what determines that arrangement. BlackPearl Morphix represents a tissue neighbourhood as an unordered set of cells (2D position and cell class) and learns its distribution with conditional flow matching, using a permutation-equivariant transformer with distance-dependent attention. In \emph{Stage~1}, trained on a public mouse-embryo seqFISH dataset and evaluated on spatially held-out tissue, the unconditional model closes $87 \pm 8\%$ of the gap between random scatter and real tissue on cell-type neighbourhood structure (three splits) and outperforms a composition-matched shuffled baseline in every split. In \emph{Stage~2} we use a public Perturb-FISH CRISPR screen in tumour xenografts (187{,}215 cells; 35 knocked-out genes), which we reconstruct into a cell-level table linking position, cell class and knockout. A location-controlled permutation test finds real knockout effects on neighbourhood composition (14 significant tests across 7 knockouts), but neither a knockout-conditioned model nor a simple lookup baseline predicts knockout-specific neighbourhoods in held-out tissue better than assuming no effect: in this pooled design, effects are small, spatially heterogeneous and confounded with location. In contrast, conditioning on each tumour cell's own expression profile, after removing genes that could leak from neighbouring cells, predicts its neighbourhood in held-out tissue (one split; Spearman $\rho = 0.57$ for host-cell fraction and $0.41$ for T-cell fraction; shuffled-expression control $\rho \approx 0$), matching a strong linear baseline and recovering known biology (interferon-response genes near T cells; hypoxia genes away from them). Finally (\emph{Stage~3}), a semi-synthetic virtual laboratory built on the real tumour tissue, with knockout effects planted at the measured sizes, shows why and how such experiments should be designed. Real neighbourhoods are strongly spatially correlated: the mean of 50 cells from one tissue patch varies about five times more than the mean of 50 randomly placed cells, so a mosaic (clonal) layout yields 15 false hits among 22 null knockouts per screen, whereas a randomised layout yields none. With randomised layouts, an active-learning strategy that chooses which knockout to test next finds 80\% of real effects with $2.3\times$ fewer cells than a standard screen (3{,}250 vs.\ 7{,}500) and 90\% of effects in every simulated world within 4{,}500 cells, a level the standard screen reached in only 40 of 100 worlds within 15{,}000 cells. Together, these results argue that learning causal genotype-to-tissue maps requires purpose-designed, randomised, adaptively chosen experiments, which motivates a closed-loop, robot-executed laboratory.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -228,7 +228,7 @@ The model was trained on 60{,}000 tumour-like focal cells (15{,}000 test) with t
 
 \begin{table}[!t]
 \centering
-\caption{Stage 2b: predicting each held-out cell's real neighbourhood from its expression (clean genes; one split). R$^2$ / Spearman $\rho$.}
+\caption{Stage 2b: predicting each held-out cell's real neighbourhood from its expression (clean genes; single split, seed~0). R$^2$ / Spearman $\rho$.}
 \label{tab:s2b}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
@@ -247,14 +247,14 @@ Ridge regression    & 0.17 / 0.41 & 0.40 / 0.57 & 0.15 / 0.38 \\
 
 All three pre-specified criteria were met (Table~\ref{tab:s2b}, Fig.~\ref{fig:s2b}). Expression predicts host fraction (R$^2=0.40$, $\rho=0.57$), T-cell fraction (R$^2=0.16$, $\rho=0.41$) and distance to the nearest T cell ($\rho=0.36$) in unseen tissue. The shuffled-expression control has $\rho\approx0$ (its negative R$^2$ reflects confident predictions assigned to the wrong cells), and the held-out loss was lowest with the cell's own expression (1.716) vs.\ none (1.721) and shuffled (1.727). Using all genes changed little (T-cell fraction R$^2$ 0.17 vs.\ 0.16; host 0.38 vs.\ 0.40), so leaking transcripts do not drive the result.
 
-Morphix matches ridge regression on composition and outperforms $k$NN on host fraction, but is worse on spacing features (R$^2$ $-0.12$ and $-0.56$ for mean and nearest distance, vs.\ 0.08 and 0.14 for ridge; ranking is preserved, $\rho\approx0.25$), reflecting a bias in generated distances also seen in Stage~2. Its distinct contribution is generating complete, cell-resolved neighbourhoods rather than summary predictions (Fig.~\ref{fig:s2bex}). These results come from one split \todo{update with mean $\pm$ s.d.\ over seeds 0--2}.
+Morphix matches ridge regression on composition and outperforms $k$NN on host fraction, but is worse on spacing features (R$^2$ $-0.12$ and $-0.56$ for mean and nearest distance, vs.\ 0.08 and 0.14 for ridge; ranking is preserved, $\rho\approx0.25$), reflecting a bias in generated distances also seen in Stage~2. Its distinct contribution is generating complete, cell-resolved neighbourhoods rather than summary predictions (Fig.~\ref{fig:s2bex}). These results come from a single held-out split (seed~0). Replication on two further splits (seeds~1 and~2) is planned for November 2026: the Brain Image Library, which hosts the Perturb-FISH expression tables, is relocating its data centre, and data access is suspended during October 2026.
 
-\textbf{Biological consistency (associations, not causes).} Ridge coefficients on the kept genes associate T-cell-rich neighbourhoods with CXCL10, CXCL11, IDO1, HLA-B and TAPBP, consistent with the interferon-$\gamma$ response of tumour cells to nearby T cells~\cite{tokunaga2018}, and T-cell-poor neighbourhoods with PKM, VEGFA, PDK1 and CA9, consistent with hypoxic, glycolytic regions from which T cells are often excluded \todo{citation}. None of these genes was removed by the leakage filter, so they reflect the tumour cells' own state. Because neighbourhoods also shape expression, these links are associative.
+\textbf{Biological consistency (associations, not causes).} Ridge coefficients on the kept genes associate T-cell-rich neighbourhoods with CXCL10, CXCL11, IDO1, HLA-B and TAPBP, consistent with the interferon-$\gamma$ response of tumour cells to nearby T cells~\cite{tokunaga2018}, and T-cell-poor neighbourhoods with PKM, VEGFA, PDK1 and CA9, consistent with hypoxic, glycolytic regions from which T cells are often excluded~\cite{pietrobon2021}. None of these genes was removed by the leakage filter, so they reflect the tumour cells' own state. Because neighbourhoods also shape expression, these links are associative.
 
 \begin{figure}[!t]
 \centering
 \morphixfig{s2b_r2_by_method.png}{\columnwidth}
-\caption{Stage 2b: R$^2$ on held-out cells by method and feature, for clean genes (left) and all genes (right).}
+\caption{Stage 2b: R$^2$ on held-out cells by method and feature (seed~0), for clean genes (left) and all genes (right).}
 \label{fig:s2b}
 \end{figure}
 
@@ -348,7 +348,7 @@ Automation provides scale, consistent handling, randomised layouts and the tight
   \item 2D, 64-cell neighbourhoods; no 3D structure or whole tissues.
   \item One embryo section (Stage~1) and one xenograft experiment (Stages~2--2b); held-out regions differ anatomically from training regions, so ``real vs.\ real'' is not a ceiling.
   \item Neighbour classes in Stages~2--2b are coarse (tumour-like, T cell, host), and the host class is a count-based heuristic.
-  \item Stage~2b is one split \todo{update}; Stage~2 is one split; Stage~1 uses three.
+  \item Stage~2b is one split (seeds~1--2 will be run when Brain Image Library data access resumes, expected November 2026); Stage~2 is one split; Stage~1 uses three.
   \item Generated distances are biased in Stages~2--2b; cell classes use a continuous relaxation and argmax.
   \item Stage~2b associations are not causal, and the leakage filter is a heuristic that cannot exclude all segmentation artefacts.
   \item Stage~3 is semi-synthetic: cells and their variability are real, but knockout effects are planted additive shifts on three summary features with assumed sizes and prevalence; it validates experiment-selection logic, not biology. The active strategy was developed on mock tissue, and its calling rule assumes independent cells, which holds for randomised but not mosaic layouts.
@@ -365,7 +365,7 @@ We thank the authors of the seqFISH and Perturb-FISH studies for making their da
 \begin{thebibliography}{99}
 \bibitem{lohoff2022} T.~Lohoff, S.~Ghazanfar, A.~Missarova \emph{et al.}, ``Integration of spatial and single-cell transcriptomic data elucidates mouse organogenesis,'' \emph{Nature Biotechnology}, vol.~40, pp.~74--85, 2022.
 \bibitem{palla2022} G.~Palla, H.~Spitzer, M.~Klein \emph{et al.}, ``Squidpy: a scalable framework for spatial omics analysis,'' \emph{Nature Methods}, vol.~19, pp.~171--178, 2022.
-\bibitem{binan2025} L.~Binan \emph{et al.}, ``Simultaneous CRISPR screening and spatial transcriptomics reveal intracellular, intercellular, and functional transcriptional circuits,'' \emph{Cell}, 2025. \todo{verify authors, volume, pages}
+\bibitem{binan2025} L.~Binan, A.~Jiang, S.~A.~Danquah, V.~Valakh, B.~Simonton, J.~Bezney, R.~T.~Manguso, K.~B.~Yates, R.~Nehme, B.~Cleary, and S.~L.~Farhi, ``Simultaneous CRISPR screening and spatial transcriptomics reveal intracellular, intercellular, and functional transcriptional circuits,'' \emph{Cell}, vol.~188, no.~8, pp.~2141--2158.e18, 2025.
 \bibitem{lipman2023} Y.~Lipman, R.~T.~Q.~Chen, H.~Ben-Hamu, M.~Nickel, and M.~Le, ``Flow matching for generative modeling,'' in \emph{Proc.\ ICLR}, 2023.
 \bibitem{liu2023} X.~Liu, C.~Gong, and Q.~Liu, ``Flow straight and fast: Learning to generate and transfer data with rectified flow,'' in \emph{Proc.\ ICLR}, 2023.
 \bibitem{albergo2023} M.~S.~Albergo and E.~Vanden-Eijnden, ``Building normalizing flows with stochastic interpolants,'' in \emph{Proc.\ ICLR}, 2023.
@@ -378,12 +378,13 @@ We thank the authors of the seqFISH and Perturb-FISH studies for making their da
 \bibitem{hoogeboom2022} E.~Hoogeboom, V.~G.~Satorras, C.~Vignac, and M.~Welling, ``Equivariant diffusion for molecule generation in 3D,'' in \emph{Proc.\ ICML}, 2022.
 \bibitem{biancalani2021} T.~Biancalani, G.~Scalia, L.~Buffoni \emph{et al.}, ``Deep learning and alignment of spatially resolved single-cell transcriptomes with Tangram,'' \emph{Nature Methods}, vol.~18, pp.~1352--1362, 2021.
 \bibitem{nitzan2019} M.~Nitzan, N.~Karaiskos, N.~Friedman, and N.~Rajewsky, ``Gene expression cartography,'' \emph{Nature}, vol.~576, pp.~132--137, 2019.
-\bibitem{fischer2023} D.~S.~Fischer, A.~C.~Schaar, and F.~J.~Theis, ``Modeling intercellular communication in tissues using spatial graphs of cells,'' \emph{Nature Biotechnology}, vol.~41, pp.~332--336, 2023. \todo{verify}
+\bibitem{fischer2023} D.~S.~Fischer, A.~C.~Schaar, and F.~J.~Theis, ``Modeling intercellular communication in tissues using spatial graphs of cells,'' \emph{Nature Biotechnology}, vol.~41, no.~3, pp.~332--336, 2023.
 \bibitem{navidi2025} Z.~Navidi, J.~Ma, E.~A.~Miglietta \emph{et al.}, ``MorphoDiff: Cellular morphology painting with diffusion models,'' in \emph{Proc.\ ICLR}, 2025.
 \bibitem{zhang2025} Y.~Zhang, Y.~Su, C.~Wang \emph{et al.}, ``CellFlux: Simulating cellular morphology changes via flow matching,'' in \emph{Proc.\ ICML}, 2025.
 \bibitem{bray2016} M.-A.~Bray, S.~Singh, H.~Han \emph{et al.}, ``Cell Painting, a high-content image-based assay for morphological profiling using multiplexed fluorescent dyes,'' \emph{Nature Protocols}, vol.~11, pp.~1757--1774, 2016.
 \bibitem{chandrasekaran2023} S.~N.~Chandrasekaran, J.~Ackerman, E.~Alix \emph{et al.}, ``JUMP Cell Painting dataset: morphological impact of 136,000 chemical and genetic perturbations,'' \emph{bioRxiv}, 2023.
-\bibitem{tokunaga2018} R.~Tokunaga, W.~Zhang, M.~Naseem \emph{et al.}, ``CXCL9, CXCL10, CXCL11/CXCR3 axis for immune activation -- a target for novel cancer therapy,'' \emph{Cancer Treatment Reviews}, vol.~63, pp.~40--47, 2018. \todo{verify}
+\bibitem{tokunaga2018} R.~Tokunaga, W.~Zhang, M.~Naseem \emph{et al.}, ``CXCL9, CXCL10, CXCL11/CXCR3 axis for immune activation -- a target for novel cancer therapy,'' \emph{Cancer Treatment Reviews}, vol.~63, pp.~40--47, 2018.
+\bibitem{pietrobon2021} V.~Pietrobon and F.~M.~Marincola, ``Hypoxia and the phenomenon of immune exclusion,'' \emph{Journal of Translational Medicine}, vol.~19, art.~no.~9, 2021.
 \bibitem{king2004} R.~D.~King, K.~E.~Whelan, F.~M.~Jones \emph{et al.}, ``Functional genomic hypothesis generation and experimentation by a robot scientist,'' \emph{Nature}, vol.~427, pp.~247--252, 2004.
 \bibitem{burger2020} B.~Burger, P.~M.~Maffettone, V.~V.~Gusev \emph{et al.}, ``A mobile robotic chemist,'' \emph{Nature}, vol.~583, pp.~237--241, 2020.
 \bibitem{settles2009} B.~Settles, ``Active learning literature survey,'' Computer Sciences Technical Report 1648, University of Wisconsin--Madison, 2009.
@@ -394,9 +395,11 @@ We thank the authors of the seqFISH and Perturb-FISH studies for making their da
 \appendices
 
 \section{Hyperparameters}
+Table~\ref{tab:hparams} lists the hyperparameters for all stages.
 \begin{table*}[!h]
 \centering
 \caption{Hyperparameters.}
+\label{tab:hparams}
 \small
 \begin{tabular}{lll}
 \toprule
