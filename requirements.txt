@@ -1,0 +1,8 @@
+# The notebooks are designed for Google Colab, where these are preinstalled
+# (except anndata/squidpy, which the notebooks install themselves).
+numpy
+scipy
+pandas
+matplotlib
+torch
+anndata
