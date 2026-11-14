@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: "BlackPearl Morphix: Generative Models of Tissue Neighbourhoods from Spatial Single-Cell Data, and What They Can and Cannot Learn About Genetic Perturbations"
+type: software
+authors:
+  - family-names: Raj
+    given-names: Aditya
+    affiliation: "School of Informatics, The University of Edinburgh"
+  - family-names: Srimurugan
+    given-names: Senthuran
+    affiliation: "School of Informatics, The University of Edinburgh"
+  - family-names: Raj
+    given-names: Utkarsh
+    affiliation: "SRM Institute of Science and Technology"
+  - family-names: Azim
+    given-names: Sughra
+    affiliation: "School of Physics and Astronomy, The University of Edinburgh"
+repository-code: "https://github.com/senthuran2107/BlackPearl-Morphix"
+license: MIT
+date-released: 2026-11-14
+keywords:
+  - flow matching
+  - generative models
+  - spatial transcriptomics
+  - CRISPR screens
+  - active learning

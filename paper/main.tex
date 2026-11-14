@@ -1,17 +1,8 @@
 % =====================================================================
-%  BlackPearl Morphix -- full research paper (IEEEtran journal format)
-%  Compile on Overleaf with pdfLaTeX.
-%  FIGURES: upload into the project root, renamed as below (labelled
-%  placeholder boxes are shown until then):
-%    Stage 1 zip  : real_vs_generated.png, flow_trajectory.png
-%    Stage 2 zip  : predicted_vs_observed.png -> s2_predicted_vs_observed.png
-%    Step 3       : screenshot of the heatmap   -> s2_signal_heatmap.png
-%    Stage 2b zip : r2_by_method.png -> s2b_r2_by_method.png
-%                   pred_vs_real.png -> s2b_pred_vs_real.png
-%                   examples.png     -> s2b_examples.png
-%    Stage 3 zip  : recall_vs_cells.png -> s3_recall_vs_cells.png
-%                   design_comparison.png -> s3_design_comparison.png
-%  Red text in [brackets] = items still to fill in.
+%  BlackPearl Morphix -- research paper (IEEEtran journal format)
+%  Compile with pdfLaTeX (e.g. on Overleaf). Figures are read from the
+%  project root using the file names in docs/figures/ of the repository;
+%  a labelled placeholder box is shown for any figure not yet uploaded.
 % =====================================================================
 \documentclass[journal]{IEEEtran}
 
@@ -35,15 +26,17 @@
   stringstyle=\color{red!60!black}, columns=fullflexible, showstringspaces=false}
 
 \markboth{BlackPearl Morphix Research Draft, October 2026}%
-{Raj and Srimurugan: Generative Models of Tissue Neighbourhoods}
+{Raj \MakeLowercase{\textit{et al.}}: Generative Models of Tissue Neighbourhoods}
 
 \begin{document}
 
 \title{BlackPearl Morphix: Generative Models of Tissue Neighbourhoods from Spatial Single-Cell Data, and What They Can and Cannot Learn About Genetic Perturbations}
 
-\author{Aditya Raj and Senthuran Srimurugan%
-\thanks{Aditya Raj is with the School of Informatics, The University of Edinburgh, Edinburgh, Scotland, UK.}%
-\thanks{Senthuran Srimurugan is with the School of Informatics, The University of Edinburgh, Edinburgh, Scotland, UK.}%
+\author{Aditya Raj, Senthuran Srimurugan, Utkarsh Raj, and Sughra Azim%
+\thanks{Aditya Raj and Senthuran Srimurugan are with the School of Informatics, The University of Edinburgh, Edinburgh, Scotland, UK.}%
+\thanks{Utkarsh Raj is with SRM Institute of Science and Technology, Chennai, India, and was a visiting student at The University of Edinburgh during this work.}%
+\thanks{Sughra Azim is with the School of Physics and Astronomy, The University of Edinburgh, Edinburgh, Scotland, UK.}%
+\thanks{Correspondence: Aditya Raj, A.Raj-2@sms.ed.ac.uk.}%
 \thanks{Code and results: \url{https://github.com/senthuran2107/BlackPearl-Morphix}.}}
 
 \maketitle
@@ -359,7 +352,7 @@ Automation provides scale, consistent handling, randomised layouts and the tight
 A permutation-equivariant flow-matching model learns realistic tissue neighbourhoods and their cell-type adjacency from spatial single-cell data. Conditioned on a cell's own expression, it predicts that cell's neighbourhood in unseen tissue and recovers known immunological programmes. Conditioned on CRISPR knockouts from a pooled spatial screen, neither it nor a simple lookup predicts knockout-specific neighbourhoods beyond what location explains, even though a location-controlled test detects real effects. A semi-synthetic virtual laboratory on real tissue explains why: neighbourhoods are spatially correlated, so mosaic layouts generate many false hits, whereas randomised layouts combined with active experiment selection find real effects with several-fold fewer cells. We conclude that learning how genetic perturbations reshape tissue requires purpose-designed, randomised and adaptively chosen experiments, and that a closed-loop, robot-executed laboratory is a natural way to generate them.
 
 \section*{Acknowledgment}
-We thank the authors of the seqFISH and Perturb-FISH studies for making their data public. Computation used Google Colab.
+We are grateful to Shubham Kumar (Faculty of Bioscience Engineering, KU Leuven) for guidance on the biological framing, omics data and bioinformatics, and to Prachi Prakash (Yale University) for brainstorming and discussions that helped set the research direction. We thank the authors of the seqFISH and Perturb-FISH studies for making their data public. Computation used Google Colab. AI coding assistants were used for parts of the code and text; all methods, results and claims were checked by the authors.
 
 % =====================================================================
 \begin{thebibliography}{99}
