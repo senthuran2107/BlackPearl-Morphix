@@ -11,7 +11,7 @@ Aditya Raj<sup>1</sup> · Senthuran Srimurugan<sup>1</sup> · Utkarsh Raj<sup>2<
 With guidance from **Shubham Kumar** (KU Leuven) and **Prachi Prakash** (Yale University)
 
 [![Paper](https://img.shields.io/badge/paper-LaTeX%20draft-b31b1b.svg)](paper/main.tex)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab.svg)](requirements.txt)
 [![Run on Colab](https://img.shields.io/badge/run%20on-Google%20Colab-f9ab00.svg)](#reproducing-the-results)
 
@@ -160,4 +160,8 @@ Questions and feedback are welcome: please [open an issue](https://github.com/se
 
 ## License
 
-Code is released under the [MIT License](LICENSE). Datasets remain under the terms of their original publications.
+Code is released under the [PolyForm Noncommercial License 1.0.0](LICENSE). You may use, modify and share it for **non-commercial purposes**, including academic research, teaching and personal study, provided you keep the licence and copyright notice and cite this work.
+
+**Commercial use requires a separate licence from the authors.** For commercial licensing, contact Aditya Raj at A.Raj-2@sms.ed.ac.uk.
+
+Datasets remain under the terms of their original publications.
