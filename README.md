@@ -160,7 +160,7 @@ Questions and feedback are welcome: please [open an issue](https://github.com/se
 
 ## License
 
-Code is released under the [PolyForm Noncommercial License 1.0.0](LICENSE). You may use, modify and share it for **non-commercial purposes**, including academic research, teaching and personal study, provided you keep the licence and copyright notice and cite this work.
+Code is released under the [PolyForm Noncommercial License 1.0.0](LICENSE). You may use, modify and share it for **non-commercial purposes**, including academic research, teaching and personal study, provided you keep the licence and the copyright notice in [`NOTICE`](NOTICE), and cite this work.
 
 **Commercial use requires a separate licence from the authors.** For commercial licensing, contact Aditya Raj at A.Raj-2@sms.ed.ac.uk.
 
